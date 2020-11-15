@@ -7,7 +7,6 @@ using namespace std;
 char popUpMenu();
 void answerSelection();
 char colorBlindType();
-void changeColors(char);
 vector <int> changeRgbVectorOne(vector <int> &,char);
 vector <int> changeRgbVectorTwo(vector <int> &,char);
 int main()
