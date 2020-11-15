@@ -3,7 +3,8 @@
 ## Description
 
 My program, essentially, takes the user input on which type of color blindness they have and then the program will change the colors of said website into colors that are easier to be seen by each respective group.
-
+# v0.2 Updates
+Replace this text with your updated description
 ## Developer
 
 Matthew Solone
@@ -126,3 +127,8 @@ I had one interation in my program. I used a 'while' loop to get the contents of
 ### File Input and Output
 
 I used 'fstream' to import one .txt file which held the different types of colorblindness of which the user could choose. 
+### Arrays/Vectors
+!!!Replace with a summary and examples of how arrays/vectors have been used effectively and appropriately!!!
+
+### Functions
+!!!Replace with a summary and examples of how functions have been used effectively and appropriately!!!
