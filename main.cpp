@@ -2,13 +2,16 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <stdio.h>      
+#include <stdlib.h>
 
 using namespace std;
 char popUpMenu();
 void answerSelection();
 char colorBlindType();
-vector <int> changeRgbVectorOne(vector <int> &,char);
+vector<int> changeRgbVectorOne(vector <int> &,char);
 vector <int> changeRgbVectorTwo(vector <int> &,char);
+
 int main()
 {
   vector <int> rgbOne,rgbTwo; 
@@ -17,9 +20,9 @@ int main()
   fstream reader,readerTwo;
 
   reader.open("rgbFromHtml.txt",ios:: in );
-  readerTwo.open("rgbFromHtml.txt",ios:: in );
+  readerTwo.open("rgbFromHtml2.txt",ios:: in );
   if(reader.is_open()){
-    while(reader >> line){
+    while(readerTwo >> line){
       rgbOne.push_back(line);
     }
   }
