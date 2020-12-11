@@ -16,10 +16,11 @@ class color{
   vector <int> rgbDos;
   public:
   color();
-  void setColorBlind(char);
-  void setColorOne(vector<int>);
-  void setColorTwo(vector <int>);
-  void changeColor();
+  //void setColorBlind(char);
+  void setColorBlind();
+  void setColors(vector<int>,vector<int>);
+  
+  void changeColors();
 
 };
 
