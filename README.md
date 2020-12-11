@@ -5,6 +5,8 @@
 My program, essentially, takes the user input on which type of color blindness they have and then the program will change the colors of said website into colors that are easier to be seen by each respective group.
 # v0.2 Updates
 In addition to the original use of this algorithim I have added a few updates to fix the funtionality. For example putting code chunks into functionsd and adding the use and storage of vectors.
+#v1.0 Updates
+In this update I cleaned up the program by adding the class 'color' which stores the type of colorblindness and the two colors that changed.
 ## Developer
 
 Matthew Solone
@@ -14,45 +16,56 @@ Matthew Solone
 To run the program, give the following commands:
 
 ```
+// main.cpp
+
+#include "color.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
+#include <stdio.h>      
+#include <stdlib.h>
 
 using namespace std;
 char popUpMenu();
-void answerSelection();
-char colorBlindType();
-void changeColors(char);
-vector <int> changeRgbVectorOne(vector <int> &,char);
-vector <int> changeRgbVectorTwo(vector <int> &,char);
+
+
 int main()
 {
+  // Declare all local variables
   vector <int> rgbOne,rgbTwo; 
-  double line;
   char response, typeofC;
   fstream reader,readerTwo;
+  color rgbAlpha;
 
-  reader.open("rgbFromHtml.txt",ios:: in );
-  readerTwo.open("rgbFromHtml.txt",ios:: in );
+// Read in color combos
+  reader.open("rgbFromHtml.csv",ios:: in );
+  readerTwo.open("rgbFromHtml2.csv",ios:: in );
   if(reader.is_open()){
+    double line;
     while(reader >> line){
       rgbOne.push_back(line);
     }
   }
   reader.close();
   if(readerTwo.is_open()) {
-    while(readerTwo >> line){
-      rgbTwo.push_back(line);
+    double linear;
+    while(readerTwo >> linear){
+      rgbTwo.push_back(linear);
     }
   }
-  response = popUpMenu();
 
+  // Asks user whether or not they are colorblind
+  response = popUpMenu();
+  
   if(response =='y'){
-    answerSelection();
-    typeofC = colorBlindType();
-    rgbOne = changeRgbVectorOne(rgbOne,typeofC); 
-    rgbTwo = changeRgbVectorTwo(rgbTwo,typeofC);
+// Set which color blind
+    rgbAlpha.setColorBlind();
+// Setting colors
+    rgbAlpha.setColors(rgbOne,rgbTwo);
+// Changing colors
+    rgbAlpha.changeColors();
+
     cout << "Changes have been made to the site for easier viewing, enjoy!\n";
   }else
   {
@@ -69,73 +82,107 @@ char popUpMenu(){
   cin >> response;
   return response;
 }
-void answerSelection(){
+
+//color.h
+
+#ifndef COLOR_H
+#define COLOR_H
+#include <string>
+#include <vector>
+#include <iostream>
+#include <stdio.h>     
+#include <stdlib.h>
+using std::cout;
+using std::string;
+using std::vector;
+
+class color{
+  private:
+  char TypeColorB;
+  vector <int> rgbUno;
+  vector <int> rgbDos;
+  public:
+  color();
+  //void setColorBlind(char);
+  void setColorBlind();
+  void setColors(vector<int>,vector<int>);
+  
+  void changeColors();
+
+};
+
+#endif 
+
+//color.cpp
+
+#include "color.h"
+#include <string>
+#include <iostream>
+#include <stdio.h>      
+#include <stdlib.h>
+using std::cout;
+using std::cin;
+using std::endl;
+using std::string;
+// Constructer 
+color::color(){
+TypeColorB = ' ';
+ 
+}
+void color::setColorBlind(){
+  char response;
   cout<< "Protanopia(P)\nDeuteranopia(D)\nTritanopia(T)\nComplete (C)"<<endl;
+  cout << "Please choose your color blindness from the list above.\n";
+  cin >> response;
+  TypeColorB = response;
 }
-char colorBlindType(){
-  char type;
-cout << "Please choose your color blindness from the list Above.\n";
-  cin >> type;
-  return type;
+//Setting values for colors within the class
+void color::setColors(vector <int> rgbEx,vector <int> rgbYx){
+rgbUno = rgbEx;
+rgbDos = rgbYx;
 }
-vector <int> changeRgbVectorOne(vector <int> &rgbOne,char typeofC){
-if(typeofC == 'P' || typeofC == 'p')
+// Changing the colors of the chosen vectors
+void color::changeColors(){
+if(TypeColorB == 'P' || TypeColorB == 'p')
   {
-    rgbOne[0]=110;
-    rgbOne[1]=154;
-    rgbOne[2]=229;
-    
-  }else if(typeofC == 'C' || typeofC == 'c')
+    rgbUno[0]=110;
+    rgbUno[1]=154;
+    rgbUno[2]=229;
+    rgbDos[0]=247;
+    rgbDos[1]=203;
+    rgbDos[2]=202;
+  }else if(TypeColorB == 'C' || TypeColorB == 'c')
   {
-    rgbOne[0]=110;
-    rgbOne[1]=110;
-    rgbOne[2]=110;
-  } else if(typeofC == 'T' || typeofC == 't')
+    rgbUno[0]=110;
+    rgbUno[1]=110;
+    rgbUno[2]=110;
+    rgbDos[0]=214;
+    rgbDos[1]=214;
+    rgbDos[2]=214;
+  } else if(TypeColorB == 'T' || TypeColorB == 't')
   {
-    rgbOne[0]=166;
-    rgbOne[1]=141;
-    rgbOne[2]=111;
-  } else if(typeofC == 'D' || typeofC == 'd')
+    rgbUno[0]=166;
+    rgbUno[1]=141;
+    rgbUno[2]=111;
+    rgbDos[0]=229;
+    rgbDos[1]=200;
+    rgbDos[2]=79;
+  } else if(TypeColorB == 'D' || TypeColorB == 'd')
   {
-    rgbOne[0]=122;
-    rgbOne[1]=168;
-    rgbOne[2]=108;
+    rgbUno[0]=122;
+    rgbUno[1]=168;
+    rgbUno[2]=108;
+    rgbDos[0]=181;
+    rgbDos[1]=155;
+    rgbDos[2]=249;
   }
   else 
   {
     
   }
-  return rgbOne;
-  }
-  vector <int> changeRgbVectorTwo(vector <int> &rgbTwo,char typeofC){
-    if(typeofC == 'P' || typeofC == 'p')
-  {
-    rgbTwo[0]=247;
-    rgbTwo[1]=203;
-    rgbTwo[2]=202;
-    
-  }else if(typeofC == 'C' || typeofC == 'c')
-  {
-    rgbTwo[0]=214;
-    rgbTwo[1]=214;
-    rgbTwo[2]=214;
-  } else if(typeofC == 'T' || typeofC == 't')
-  {
-    rgbTwo[0]=229;
-    rgbTwo[1]=200;
-    rgbTwo[2]=79;
-  } else if(typeofC == 'D' || typeofC == 'd')
-  {
-    rgbTwo[0]=181;
-    rgbTwo[1]=155;
-    rgbTwo[2]=249;
-  }
-  else 
-  {
-    
-  }
-  return rgbTwo;
-  }
+}
+
+
 
 ```
 
@@ -182,3 +229,5 @@ I used 'fstream' to import two .txt files which held the different RGB values th
 I used vectors to hold the example RGB values that I picked out the .html from Amazon's homepage. Each vector held 3 values, RGB respectively. From this, the program can change each value in the vector to suit the color blindness selected.
 ### Functions
 I used a total of 5 functions throughout my program. The first was labeled 'popUpMenu' which prompted the user to whether or not they had a type of colorblindness. The next was 'answerSelection', this prompted the user to pick from a list of colorblindness types. This went hand in hand with the function 'colorBlindType' this gave the list of different colorblindness. Then were the functions 'changeRgbVectorOne' and 'changeRgbVectorTwo'. These functions were the ones that change the values within the vectors.
+### Classes
+I utilized classes by creating the class called 'color'. Within the class I had three private variables, two that held color and one that held the type of colorblindness. The functions withtin the class had the following uses: to set the type of colorblindness, set the colors to the private vectors, and finally change the colors within those vectors.
